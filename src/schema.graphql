@@ -1,0 +1,45 @@
+type ShoppingCart {
+  id: ID!
+  total: Int
+  products: [Product]
+  # ticket: [Ticket] @TODO
+}
+
+type Product {
+  id: ID!
+  name: String
+  description: String
+  price: Int
+  # type: TicketType
+  # priority: TicketPriority
+  # status: TicketStatus
+  # project: Project @TODO
+}
+
+type DeletedResourceResponse {
+  deletedId: ID
+  success: Boolean
+}
+
+type Query {
+  getProductById(productId: ID!): Product
+  getAllProducts: [Product]
+  getShoppingCart(cartId: ID!): ShoppingCart
+}
+
+type Mutation {
+  createCart(id: ID!, total: Int, input: ProductInput): ShoppingCart
+  addToCart(productId: ID!, cartId: ID!): ShoppingCart
+  removeFromCart(productId: ID!, cartId: ID!): DeletedResourceResponse
+  deleteCart(cartId: ID!): DeletedResourceResponse
+
+  createProduct(name: String!, description: String!, price: Int!): Product
+  deleteProduct(productId: ID!): DeletedResourceResponse
+}
+
+input ProductInput {
+  id: ID
+  name: String
+  description: String
+  price: Int
+}
